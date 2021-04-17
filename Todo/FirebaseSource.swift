@@ -10,17 +10,39 @@ import Foundation
 import FirebaseDatabase
 
 class FirebaseSource: ServiceProtocol {
-    let dbRef: DatabaseReference = Database.database().reference()
+    private let dbRef: DatabaseReference = Database.database().reference()
+    private var dataList: Observable<[Todo]> = Observable(value: [])
+    var counter = 0
     
-    func getTodoList() -> [Todo] {
-        return []
+    init() {
+        //observe data change
+        dbRef.observe(DataEventType.value) { [weak self] (snapshot) in
+            if let snapshotVal = snapshot.value as? [String: Any] {
+                var todos: [Todo] = []
+                let keys = Array(snapshotVal.keys)
+                for key in keys {
+                    if var item = snapshotVal[key] as? [String: Any] {
+                        item["id"] = key
+                        let todo = Todo(dict: item)
+                        todos.append(todo)
+                    }
+                }
+                
+                self?.dataList.value = todos
+            }
+        }
+    }
+    
+    func getTodoList() -> Observable<[Todo]> {
+        return dataList
     }
     
     func addItem(task: String) {
-        let todo = Todo(task: task, time: Date())
+        counter += 1
+        let todo = Todo(id: "\(counter)", task: task)
         
         //Can only store objects of type NSNumber, NSString, NSDictionary, and NSArray.
-        dbRef.setValue(todo.asDictionary())
+        dbRef.child("\(counter)").setValue(todo.toDictionary())
     }
     
     func removeItem(id: String) {

@@ -9,15 +9,17 @@
 import Foundation
 
 struct Todo {
+    var id: String
     var task: String
-    var time: Date
     
-    private var dictionary: [String: Any] {
-            return ["task": task,
-                    "time": ""]
+    func toDictionary() -> [String: Any] {
+        return ["task": task]
     }
-    
-    func asDictionary() -> [String: Any] {
-        return dictionary
+}
+
+extension Todo {
+    init(dict: [String: Any]) {
+        id = (dict["id"] as? String) ?? ""
+        task = (dict["task"] as? String) ?? ""
     }
 }

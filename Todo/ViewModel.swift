@@ -9,15 +9,17 @@
 class ViewModel {
     
     let service: ServiceProtocol
+    var todoList: Observable<[Todo]> = Observable(value: [])
     
     init(service: ServiceProtocol) {
         self.service = service
+
+        //listen to changes
+        service.getTodoList().bind { [weak self] (todos) in
+            self?.todoList.value = todos
+        }
     }
-    
-    func getTodoList() -> [Todo] {
-        return service.getTodoList()
-    }
-    
+        
     func addItem(task: String) {
         service.addItem(task: task)
     }

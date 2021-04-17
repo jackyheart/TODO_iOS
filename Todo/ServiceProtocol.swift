@@ -7,7 +7,7 @@
 //
 
 protocol ServiceProtocol {
-    func getTodoList() -> [Todo]
+    func getTodoList() -> Observable<[Todo]>
     func addItem(task: String)
     func removeItem(id: String)
 }
