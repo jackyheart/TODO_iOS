@@ -45,7 +45,9 @@ class ViewController: UIViewController {
 
         alert.addAction(UIAlertAction(title: "OK", style: .default, handler: { [weak alert, weak self] (_) in
             if let textField = alert?.textFields?.first {
-                self?.viewModel.addItem(task: textField.text ?? "")
+                if let text = textField.text, !text.isEmpty {
+                    self?.viewModel.addItem(task: text)
+                }
             }
         }))
         
