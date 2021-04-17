@@ -11,12 +11,23 @@ import UIKit
 class ViewController: UIViewController {
     
     var viewModel: ViewModel!
+    
     @IBOutlet weak var tableView: UITableView!
+    @IBOutlet weak var btnAdd: UIButton!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
         
+        //configure UI elements
+        btnAdd.layer.cornerRadius = btnAdd.bounds.width * 0.5
+        btnAdd.layer.masksToBounds = true
+        btnAdd.backgroundColor = self.view.tintColor
+        btnAdd.setTitle("+", for: .normal)
+        btnAdd.setTitleColor(.white, for: .normal)
+        btnAdd.titleLabel?.font = UIFont.systemFont(ofSize: 30.0)
+        
+        //view binding
         let fbSource = FirebaseSource()
         viewModel = ViewModel(service: fbSource)
         viewModel.todoList.bind { [weak self] (todo) in
