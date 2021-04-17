@@ -16,6 +16,7 @@
 default_platform(:ios)
 
 platform :ios do
+  
   desc "Unit testing"
   lane :test do
     cocoapods()
@@ -25,4 +26,12 @@ platform :ios do
   		clean: true
 	)
   end
+
+  desc "Upload to TestFlight"
+  lane :beta do
+  	sync_code_signing(type: "appstore")
+  	build_app(scheme: "Todo")
+  	upload_to_testflight
+  end
+
 end
