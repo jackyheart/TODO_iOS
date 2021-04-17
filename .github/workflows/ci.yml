@@ -1,21 +1,21 @@
 name: Continuous Integration
 
 on:
-	push:
-		branches:
-			- master
-	pull_request:
-		branches:
-			- master
+  push:
+    branches:
+      - master
+  pull_request:
+    branches:
+      - master
 
 jobs:
-	build_and_test:
-		name: Build and test
-		runs-on: macOS-latest
-		steps:
-			- name: Checkout
-			  uses: actions/checkout@v2
-			- name: Fastlane test
-			  uses: maierj/fastlane-action@v1.4.0
-			  with:
-			  	lane: test
+  deploy_android:
+    name: Deploy iOS
+    runs-on: macOS-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Fastlane test
+        uses: maierj/fastlane-action@v1.4.0
+        with:
+          lane: test
