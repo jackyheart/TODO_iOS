@@ -12,7 +12,6 @@ import FirebaseDatabase
 class FirebaseSource: ServiceProtocol {
     private let dbRef: DatabaseReference = Database.database().reference()
     private var dataList: Observable<[Todo]> = Observable(value: [])
-    var counter = 0
     
     init() {
         //observe data change
@@ -38,14 +37,14 @@ class FirebaseSource: ServiceProtocol {
     }
     
     func addItem(task: String) {
-        counter += 1
-        let todo = Todo(id: "\(counter)", task: task)
+        //Todo object
+        let todo = Todo(id: "", task: "\(task)")
         
         //Can only store objects of type NSNumber, NSString, NSDictionary, and NSArray.
-        dbRef.child("\(counter)").setValue(todo.toDictionary())
+        dbRef.childByAutoId().setValue(todo.toDictionary())
     }
     
     func removeItem(id: String) {
-        
+        dbRef.child(id).removeValue()
     }
 }

@@ -25,7 +25,7 @@ class ViewController: UIViewController {
     }
     
     @IBAction func addTapped(_ sender: Any) {
-        viewModel.addItem(task: "Hello")
+        viewModel.addItem(task: "Item")
     }
 }
 
@@ -44,5 +44,14 @@ extension ViewController: UITableViewDataSource {
         cell.textLabel?.text = todo.task
         
         return cell
+    }
+    
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+        
+        if editingStyle == .delete {
+            let todoList = viewModel.todoList.value
+            let todo = todoList[indexPath.row]
+            viewModel.removeItem(id: todo.id)
+        }
     }
 }
