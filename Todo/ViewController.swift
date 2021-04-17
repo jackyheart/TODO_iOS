@@ -25,7 +25,20 @@ class ViewController: UIViewController {
     }
     
     @IBAction func addTapped(_ sender: Any) {
-        viewModel.addItem(task: "Item")
+        
+        let alert = UIAlertController(title: "Todo", message: "Add a To-do Item", preferredStyle: .alert)
+        
+        alert.addTextField { (textField) in
+            textField.placeholder = "To-do Item"
+        }
+
+        alert.addAction(UIAlertAction(title: "OK", style: .default, handler: { [weak alert, weak self] (_) in
+            if let textField = alert?.textFields?.first {
+                self?.viewModel.addItem(task: textField.text ?? "")
+            }
+        }))
+        
+        self.present(alert, animated: true, completion: nil)
     }
 }
 
