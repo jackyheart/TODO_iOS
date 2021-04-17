@@ -10,7 +10,7 @@ class ViewModel {
     
     let service: ServiceProtocol
     
-    init(service: ServiceProtocol = FirebaseSource()) {
+    init(service: ServiceProtocol) {
         self.service = service
     }
     

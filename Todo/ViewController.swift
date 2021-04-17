@@ -10,11 +10,18 @@ import UIKit
 
 class ViewController: UIViewController {
     
-    let viewModel: ViewModel = ViewModel()
+    var viewModel: ViewModel!
 
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
+        
+        let fbSource = FirebaseSource()
+        viewModel = ViewModel(service: fbSource)
+    }
+    
+    @IBAction func addTapped(_ sender: Any) {
+        viewModel.addItem(task: "Hello")
     }
 }
 

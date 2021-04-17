@@ -11,4 +11,13 @@ import Foundation
 struct Todo {
     var task: String
     var time: Date
+    
+    private var dictionary: [String: Any] {
+            return ["task": task,
+                    "time": ""]
+    }
+    
+    func asDictionary() -> [String: Any] {
+        return dictionary
+    }
 }
